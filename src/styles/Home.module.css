@@ -75,6 +75,46 @@
   margin: 0;
 }
 
+.copyButton {
+  background: var(--button-primary-hover);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.copyButton:hover {
+  background: var(--button-primary-hover);
+  opacity: 0.8;
+}
+
+.copyButton:active {
+  transform: translateY(1px);
+}
+
+.copyButton.success {
+  background: #22c55e;
+}
+
+@media (prefers-color-scheme: dark) {
+  .copyButton {
+    background: #333;
+    color: white;
+  }
+  
+  .copyButton:hover {
+    background: var(--button-primary-hover);
+  }
+}
+
 @media (max-width: 600px) {
   .page {
     padding: 20px 16px;

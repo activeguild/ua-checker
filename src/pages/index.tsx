@@ -23,6 +23,7 @@ export default function Home() {
   const [userAgent, setUserAgent] = useState<string>("");
   const [userAgentData, setUserAgentData] = useState<NavigatorUAData | null>(null);
   const [mounted, setMounted] = useState<boolean>(false);
+  const [copySuccess, setCopySuccess] = useState<boolean>(false);
 
   useEffect(() => {
     setMounted(true);
@@ -37,6 +38,24 @@ export default function Home() {
       }
     }
   }, []);
+
+  const copyToClipboard = async () => {
+    try {
+      let textToCopy = `User Agent:\n${userAgent}\n\n`;
+      
+      if (userAgentData) {
+        textToCopy += `User Agent Data:\n${JSON.stringify(userAgentData, null, 2)}`;
+      } else {
+        textToCopy += `User Agent Data:\nNot supported in this browser`;
+      }
+
+      await navigator.clipboard.writeText(textToCopy);
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+  };
 
   if (!mounted) {
     return null; // Prevent hydration mismatch
@@ -75,6 +94,13 @@ export default function Home() {
               )}
             </div>
           </div>
+
+          <button 
+            className={`${styles.copyButton} ${copySuccess ? styles.success : ''}`}
+            onClick={copyToClipboard}
+          >
+            {copySuccess ? 'Copied!' : 'Copy Both'}
+          </button>
         </main>
       </div>
     </>
